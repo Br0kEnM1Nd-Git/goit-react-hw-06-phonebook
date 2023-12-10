@@ -1,64 +1,47 @@
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 import { ContactsForm } from './PhonebookForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import Notiflix from 'notiflix';
+import { addContactAction } from 'store/contacts/actions';
 
-const PhonebookForm = ({ addContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleChange = e => {
-    const elName = e.target.name;
-    const elValue = e.target.value;
-    switch (elName) {
-      case 'name':
-        setName(elValue);
-        break;
-      case 'number':
-        setNumber(elValue);
-        break;
-      default:
-        break;
-    }
-  };
+const PhonebookForm = () => {
+  const { contacts } = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
 
   const createContact = e => {
     e.preventDefault();
-    if (name.split(' ').length < 2) {
-      return alert('Name must contain more than 1 word.');
-    }
-    if (number.split('-').length < 2) {
-      return alert('Write number in 123-456 case.');
-    }
+    const form = e.target;
+    const name = form.name.value;
+    const number = form.number.value;
+
+    const isNew = contacts.every(el => {
+      if (el.name.toLowerCase() === name.toLowerCase()) return false;
+      if (el.number === number) return false;
+      return true;
+    });
+
+    const isNumber = Number(number);
+    if (!isNumber) return Notiflix.Notify.warning(`${number} is not a number!`);
+
+    form.reset();
+
+    if (!isNew)
+      return Notiflix.Notify.warning(`${name} is already in contacts!`);
+
     const newContact = {
       name,
       number,
       id: nanoid(),
     };
-    addContact(newContact);
-    setName('');
-    setNumber('');
+    dispatch(addContactAction(newContact));
   };
 
   return (
     <ContactsForm onSubmit={createContact}>
       <label htmlFor="name">Name</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        onChange={handleChange}
-        value={name}
-        required
-      />
+      <input type="text" name="name" id="name" required />
       <label htmlFor="number">Number</label>
-      <input
-        type="tel"
-        name="number"
-        id="number"
-        onChange={handleChange}
-        value={number}
-        required
-      />
+      <input type="tel" name="number" id="number" required />
       <button type="submit">Add contact</button>
     </ContactsForm>
   );

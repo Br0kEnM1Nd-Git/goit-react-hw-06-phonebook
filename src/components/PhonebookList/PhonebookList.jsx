@@ -1,6 +1,29 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { ContactsList } from './PhonebookList.styled';
+import { useEffect } from 'react';
+import { deleteContactAction, setContactsAction } from 'store/contacts/actions';
 
-export const PhonebookList = ({ contacts, filter, deleteContact }) => {
+export const PhonebookList = () => {
+  const { contacts } = useSelector(state => state.contacts);
+  const { filter } = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('contacts'));
+    localData && dispatch(setContactsAction(localData));
+  }, [dispatch]);
+
+  useEffect(() => {
+    setTimeout(
+      () => localStorage.setItem('contacts', JSON.stringify(contacts)),
+      200
+    );
+  }, [contacts]);
+
+  const deleteContact = id => {
+    dispatch(deleteContactAction(id));
+  };
+
   return (
     <ContactsList>
       {contacts
@@ -8,7 +31,7 @@ export const PhonebookList = ({ contacts, filter, deleteContact }) => {
           if (filter) {
             return (
               el.name.toLowerCase().includes(filter.toLowerCase()) ||
-              el.number.toLowerCase().includes(filter.toLowerCase())
+              el.number === filter
             );
           }
           return true;
