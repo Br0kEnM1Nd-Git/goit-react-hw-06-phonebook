@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContactsList } from './PhonebookList.styled';
 import { useEffect } from 'react';
 import { deleteContactAction, setContactsAction } from 'store/contacts/actions';
+import { getContactsSelector, getFilterSelector } from 'store/selectors';
 
 export const PhonebookList = () => {
-  const { contacts } = useSelector(state => state.contacts);
-  const { filter } = useSelector(state => state.filter);
+  const contacts = useSelector(getContactsSelector);
+  const filter = useSelector(getFilterSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {

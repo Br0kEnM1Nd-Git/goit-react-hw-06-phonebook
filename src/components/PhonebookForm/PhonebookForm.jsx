@@ -3,9 +3,10 @@ import { ContactsForm } from './PhonebookForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import Notiflix from 'notiflix';
 import { addContactAction } from 'store/contacts/actions';
+import { getContactsSelector } from 'store/selectors';
 
 const PhonebookForm = () => {
-  const { contacts } = useSelector(state => state.contacts);
+  const contacts = useSelector(getContactsSelector);
   const dispatch = useDispatch();
 
   const createContact = e => {
