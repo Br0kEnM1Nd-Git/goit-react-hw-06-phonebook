@@ -35,7 +35,7 @@ export const PhonebookList = () => {
           if (filter) {
             return (
               el.name.toLowerCase().includes(filter.toLowerCase()) ||
-              el.number === filter
+              el.number.includes(filter)
             );
           }
           return true;
