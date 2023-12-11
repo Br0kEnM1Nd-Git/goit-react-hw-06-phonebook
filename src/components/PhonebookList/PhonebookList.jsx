@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContactsList } from './PhonebookList.styled';
 import { useEffect } from 'react';
 import { getContactsSelector, getFilterSelector } from 'store/selectors';
-import {
-  deleteContactAction,
-  setContactsAction,
-} from 'store/contacts/contactsSlice';
+import { deleteContactAction, setContactsAction } from 'store/contactsSlice';
 
 export const PhonebookList = () => {
   const contacts = useSelector(getContactsSelector);
@@ -31,22 +28,22 @@ export const PhonebookList = () => {
   return (
     <ContactsList>
       {contacts
-        .filter(el => {
+        .filter(({ name, number }) => {
           if (filter) {
             return (
-              el.name.toLowerCase().includes(filter.toLowerCase()) ||
-              el.number.includes(filter)
+              name.toLowerCase().includes(filter.toLowerCase()) ||
+              number.includes(filter)
             );
           }
           return true;
         })
-        .map(el => {
+        .map(({ id, name, number }) => {
           return (
-            <li key={el.id}>
+            <li key={id}>
               <span>
-                {el.name}: {el.number}
+                {name}: {number}
               </span>
-              <button onClick={() => deleteContact(el.id)}>Delete</button>
+              <button onClick={() => deleteContact(id)}>Delete</button>
             </li>
           );
         })}

@@ -3,7 +3,7 @@ import { ContactsForm } from './PhonebookForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import Notiflix from 'notiflix';
 import { getContactsSelector } from 'store/selectors';
-import { addContactAction } from 'store/contacts/contactsSlice';
+import { addContactAction } from 'store/contactsSlice';
 
 const PhonebookForm = () => {
   const contacts = useSelector(getContactsSelector);
