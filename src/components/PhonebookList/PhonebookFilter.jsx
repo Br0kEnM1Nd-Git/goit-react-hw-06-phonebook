@@ -19,6 +19,7 @@ const PhonebookFilter = () => {
         name="filter"
         id="filter"
         onChange={debounce(e => handleChange(e), 200)}
+        autoComplete="off"
       />
     </FilterForm>
   );

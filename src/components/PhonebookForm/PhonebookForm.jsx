@@ -40,9 +40,9 @@ const PhonebookForm = () => {
   return (
     <ContactsForm onSubmit={createContact}>
       <label htmlFor="name">Name</label>
-      <input type="text" name="name" id="name" required />
+      <input type="text" name="name" id="name" required autoComplete="name" />
       <label htmlFor="number">Number</label>
-      <input type="tel" name="number" id="number" required />
+      <input type="tel" name="number" id="number" required autoComplete="tel" />
       <button type="submit">Add contact</button>
     </ContactsForm>
   );
