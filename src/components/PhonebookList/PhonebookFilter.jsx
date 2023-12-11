@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { FilterForm } from './PhonebookList.styled';
-import { changeFilterAction } from 'store/filter/actions';
 import debounce from 'lodash.debounce';
+import { changeFilterAction } from 'store/filter/filterSlice';
 
 const PhonebookFilter = () => {
   const dispatch = useDispatch();

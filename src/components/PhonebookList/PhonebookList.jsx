@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ContactsList } from './PhonebookList.styled';
 import { useEffect } from 'react';
-import { deleteContactAction, setContactsAction } from 'store/contacts/actions';
 import { getContactsSelector, getFilterSelector } from 'store/selectors';
+import {
+  deleteContactAction,
+  setContactsAction,
+} from 'store/contacts/contactsSlice';
 
 export const PhonebookList = () => {
   const contacts = useSelector(getContactsSelector);
